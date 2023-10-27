@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+.banner {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.serviceCard {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.cardBody:hover .serviceCard {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.cart {
+  margin-top: 50rem !important;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.serviceDetails {
+  background-color: rgba(0, 0, 0, 0.5);
+}
