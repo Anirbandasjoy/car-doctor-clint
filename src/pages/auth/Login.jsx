@@ -3,21 +3,31 @@ import logo from '../../assets/images/login/login.svg'
 import { Link, useNavigate } from "react-router-dom"
 import { useContext } from "react"
 import { AuthContext } from "../../context/AuthProvider"
+import axios from "axios"
 const Login = () => {
     const { loginUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = localStorage.getItem("location")
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         const form = e.target;
         // const name = form.name.value
         const email = form.email.value
-        const password = form.password.value
+        const password = form.password.value;
 
         loginUser(email, password)
             .then((userCredential) => {
                 console.log(userCredential.user)
                 alert("Logged In Successfully")
+                const role = { email, isAdmin: false }
+                axios.post("http://localhost:5000/jwt", role, { withCredentials: true })
+                    .then((res) => {
+                        console.log(res.data)
+                    })
+                    .catch(err => console.log(err))
+
+
+
                 navigate(location ? location : "/")
 
             })

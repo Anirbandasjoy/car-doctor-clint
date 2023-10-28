@@ -7,10 +7,13 @@ import Checkout from "../components/checkout/Checkout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import PrivetRouter from "./PrivetRouter";
+import Cart from "../components/cart/Cart";
+import ErrorPage from "../pages/ErrorPage";
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/",
@@ -33,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register />
+            }
+            , {
+                path: "/cart",
+                element: <PrivetRouter><Cart /></PrivetRouter>
             }
         ]
     }

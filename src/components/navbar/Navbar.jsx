@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import logo from '../../assets/logo.svg'
 import { useContext } from "react"
+import { AiOutlineShoppingCart } from "react-icons/ai"
 import { AuthContext } from "../../context/AuthProvider"
 
 const Navbar = () => {
@@ -46,6 +47,9 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
+                    <Link to="/cart">
+                        <AiOutlineShoppingCart size={35} className="mr-8 cursor-pointer" />
+                    </Link>
                     {
                         user ? <Link onClick={handleLogOut} className="btn  btn-outline btn-warning rounded-sm capitalize ">Logout</Link> : <Link to="/login" className="btn  btn-outline btn-warning rounded-sm capitalize ">Login</Link>
                     }

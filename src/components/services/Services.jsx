@@ -10,7 +10,7 @@ const Services = () => {
     const fetchData = async () => {
         try {
             setIsLoading(true)
-            const { data } = await axios.get("http://localhost:5000/services")
+            const { data } = await axios.get("http://localhost:5000/services", { withCredentials: true })
             setServices(data)
             setIsLoading(false)
             setError(null)
