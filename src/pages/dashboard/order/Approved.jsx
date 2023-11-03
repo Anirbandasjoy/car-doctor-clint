@@ -1,49 +1,27 @@
-import { useContext, useEffect, useState } from "react"
-import Navbar from "../navbar/Navbar"
+import { useContext } from "react"
 import axios from "axios"
-import { AuthContext } from "../../context/AuthProvider"
 import { AiFillCloseCircle } from "react-icons/ai"
-import LoadingSpinner from "../loading/LoadingSpinner"
-import Error from "../error/Error"
 import toast, { Toaster } from "react-hot-toast"
-const Cart = () => {
+import { AuthContext } from "../../../context/AuthProvider"
+import LoadingSpinner from "../../../components/loading/LoadingSpinner"
+import Error from "../../../components/error/Error"
+import useFetch from "../../../hooks/useFetch"
+const Approved = () => {
     const { user } = useContext(AuthContext)
-    const [CartData, setCartData] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
     const url = user?.email
         ? `http://localhost:5000/order?email=${user.email}`
         : null;
 
-    const fetchData = async (url) => {
-        try {
-            if (!url) {
-                return;
-            }
-            setLoading(true);
-            await axios
-                .get(url, { withCredentials: true })
-                .then((res) => {
-                    setCartData(res.data);
-                });
-            setLoading(false);
-            setError(null);
-        } catch (error) {
-            console.log(error);
-            setError(error.message);
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchData(url);
-    }, [url]);
+    const { data, loading, error, setData } = useFetch(url)
 
     if (loading) {
         return <LoadingSpinner />
     }
     else if (error) {
         return <Error>{error}</Error>
+    }
+    else if (data.length === 0) {
+        return <h1 className="flex justify-center lg:mt-72 text-xl lg:text-4xl">Card data Not Avilable</h1>
     }
 
     const handleDelete = (id) => {
@@ -54,10 +32,10 @@ const Cart = () => {
 
                     if (res.data.deletedCount > 0) {
 
-                        const remaining = CartData.filter(cart => cart._id !== id);
-                        setCartData(remaining)
+                        const remaining = data.filter(cart => cart._id !== id);
+                        setData(remaining)
                         toast.promise(
-                            new Promise((resolve) => setTimeout(() => resolve(res.data), 100)),
+                            new Promise((resolve) => setTimeout(() => resolve(res.data), 200)),
                             {
                                 loading: "Deleting",
                                 success: (data) => {
@@ -83,15 +61,17 @@ const Cart = () => {
     //         axios.patch(`http://localhost:5000/order/${id}`, updatedOrder)
     //             .then((res) => {
 
-    //                 const remaining = CartData.filter(cart => cart._id !== id);
-    //                 const updated = CartData.find(cart => cart._id === id);
-    //                 updated.status = "Approved"
-    //                 const newCart = [updated, ...remaining];
-    //                 setCartData(newCart)
+    //                 // const remaining = CartData.filter(cart => cart._id !== id);
+    //                 // const updated = CartData.find(cart => cart._id === id);
+    //                 // updated.status = "Approved"
+    //                 // const newCart = [updated, ...remaining];
+    //                 // setCartData(newCart)
+    //                 const removeData = CartData.filter(cart => cart._id !== id);
+    //                 setCartData(removeData)
     //                 console.log(res.data)
 
     //                 toast.promise(
-    //                     new Promise((resolve) => setTimeout(() => resolve(res.data), 1000)),
+    //                     new Promise((resolve) => setTimeout(() => resolve(res.data), 200)),
     //                     {
     //                         loading: "Updating",
     //                         success: (data) => {
@@ -108,31 +88,32 @@ const Cart = () => {
 
 
     return (
-        <div className="container mx-auto dark:bg-slate-800 h-screen">
+        <div className="container mx-auto ">
 
-            <Navbar />
 
-            <div className="mt-20 dark:text-white h-[35rem] overflow-auto">
-                <div className="overflow-x-auto">
-                    <table className="table text-center ">
+            <div className="lg:mt-8 mt-4 lg:h-[30rem] h-[17rem] dark:text-gray-500  overflow-auto">
+                <div className="overflow-x-auto ">
+                    <table className="table  text-center ">
                         {/* head */}
                         <thead>
-                            <tr className="bg-gray-300 font-bold">
-                                <th>Action</th>
-                                <th className="text-left">Name</th>
-                                <th>Price</th>
-                                <th>Date</th>
-                                <th>Action</th>
+                            <tr className="bg-yellow-100 text-gray-700 font-bold">
+                                <th className="">Action</th>
+                                <th className="text-left border-x-2 border-gray-400">Name</th>
+                                <th className="text-left border-r-2 border-gray-400">Email</th>
+                                <th className="border-x-2 border-gray-400">Price</th>
+                                <th className="border-x-2 border-gray-400">Date</th>
+                                <th className="border-x-2 border-gray-400">Phone</th>
+                                <th >Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                CartData.map(cart => {
+                                data.map(cart => {
                                     return <tr key={cart._id}>
-                                        <th>
+                                        <td className="bg-red-100 ">
                                             <AiFillCloseCircle onClick={() => handleDelete(cart._id)} size={30} className="cursor-pointer mx-auto" />
-                                        </th>
-                                        <td>
+                                        </td>
+                                        <td className="bg-blue-100">
                                             <div className="flex  items-center space-x-3">
                                                 <div className="avatar">
                                                     <div className="mask mask-squircle w-12 h-12">
@@ -145,15 +126,19 @@ const Cart = () => {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td className="text-left bg-red-100">
+                                            {cart.email}
+                                        </td>
+                                        <td className="bg-blue-100">
                                             {cart.price}
 
                                         </td>
-                                        <td>{cart.data}</td>
-                                        <th>
+                                        <td className="bg-red-100">{cart.data}</td>
+                                        <td className="bg-blue-100">{cart.phone}</td>
+                                        <td className="bg-red-100">
 
-                                            <button className="btn btn-ghost btn-sm bg-transparent text-green-400 border-2 border-green-500 w-24 rounded-sm text-xs capitalize">Details</button>
-                                        </th>
+                                            <button className="btn btn-ghost btn-sm bg-transparent text-green-400 border-2 border-green-500 w-24 rounded-sm text-xs capitalize">Approved</button>
+                                        </td>
                                     </tr>
                                 })
                             }
@@ -182,4 +167,4 @@ const Cart = () => {
     )
 }
 
-export default Cart
+export default Approved

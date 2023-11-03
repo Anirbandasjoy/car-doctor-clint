@@ -7,8 +7,6 @@ import LoadingSpinner from "../components/loading/LoadingSpinner";
 const PrivateRouter = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
     const location = useLocation();
-
-
     useEffect(() => {
         localStorage.setItem("location", location.pathname);
     }, [location]);

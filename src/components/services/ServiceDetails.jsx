@@ -6,7 +6,7 @@ const ServiceDetails = () => {
     const { data } = useLoaderData();
     const { title, img, description, facility, price, _id } = data
     return (
-        <div className="container mx-auto px-2 lg:px-0">
+        <div className="container mx-auto px-2 lg:px-0 ">
             <Navbar />
             <div>
                 <div className=" lg:h-80 h-40 w-full relative">
@@ -16,18 +16,18 @@ const ServiceDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="my-28">
+            <div className="mt-28">
                 <div className="flex flex-col lg:flex-row gap-10">
                     <div className="lg:w-3/4 w-full space-y-8">
                         <img className="w-full h-[28rem] rounded-lg" src={img} alt={title} />
                         <h1 className="text-xl font-bold lg:text-4xl">{title}</h1>
-                        <p className="text-sm lg:text-sm text-gray-500">{description}</p>
+                        <p className="text-sm lg:text-sm text-gray-400">{description}</p>
                         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                             {
                                 facility.map((fac, index) => {
-                                    return <div className="bg-gray-100 space-y-4 lg:p-20 p-10 border-t-4 border-red-400 rounded-t-xl" key={index}>
-                                        <h1 className="text-2xl text-gray-700">{fac.name}</h1>
-                                        <p className="text-xs lg:text-sm text-gray-500">{fac.details}</p>
+                                    return <div className="bg-gray-100 dark:bg-gray-700  space-y-4 lg:p-20 p-10 border-t-4 border-red-400 rounded-t-xl" key={index}>
+                                        <h1 className="text-2xl dark:text-white text-gray-700">{fac.name}</h1>
+                                        <p className="text-xs lg:text-sm text-gray-400">{fac.details}</p>
 
                                     </div>
                                 })

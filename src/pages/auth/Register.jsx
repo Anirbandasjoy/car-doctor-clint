@@ -34,7 +34,7 @@ const Register = () => {
     return (
         <div className="container mx-auto px-2 lg:px-0 ">
             <Navbar />
-            <div className="flex flex-col lg:my-20 lg:flex-row items-center">
+            <div className="flex flex-col h-screen  lg:flex-row items-center">
                 <div className="flex-1">
                     <img className="w-full h-[40rem]" src={logo} alt="logo" />
                 </div>

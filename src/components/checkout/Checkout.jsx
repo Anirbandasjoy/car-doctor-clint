@@ -4,11 +4,12 @@ import { useContext } from "react"
 import { AuthContext } from "../../context/AuthProvider"
 import { useLoaderData } from "react-router-dom"
 import axios from "axios"
+import toast, { Toaster } from "react-hot-toast"
 const Checkout = () => {
     const { user } = useContext(AuthContext)
     const { data } = useLoaderData()
     const { title, img, price } = data
-    const handleOrder = async (e) => {
+    const handleOrder = (e) => {
         e.preventDefault()
         const form = e.target;
         const name = form.name.value;
@@ -18,15 +19,22 @@ const Checkout = () => {
         const email = form.email.value;
         const status = "Pending"
         const order = { title, img, price, name, data, phone, message, email, status }
+        axios.post("http://localhost:5000/order", order)
+            .then((res) => {
+                if (res.data.insertedId) {
+                    toast.promise(
+                        new Promise((resolve) => setTimeout(() => resolve(res.data), 2000)),
+                        {
+                            loading: "Order Placed",
+                            success: () => {
+                                return <b>Order Placed Successfully</b>;
+                            },
+                            error: <b>Could not placed .</b>,
+                        }
+                    );
+                }
+            })
 
-        try {
-            const { data } = await axios.post("http://localhost:5000/order", order)
-            if (data.insertedId) {
-                alert("Order Placed Successfully")
-            }
-        } catch (error) {
-            console.log(error)
-        }
 
         form.reset()
 
@@ -43,11 +51,11 @@ const Checkout = () => {
                 </div>
             </div>
 
-            <div className="my-20">
-                <form onSubmit={handleOrder} className="lg:p-28 p-5 space-y-6 bg-gray-100">
+            <div className="mt-20">
+                <form onSubmit={handleOrder} className="lg:p-28 p-5 space-y-6 dark:bg-gray-400 bg-gray-100">
                     <div className="flex flex-col lg:flex-row  items-center gap-5 justify-center">
                         <div className="w-full">
-                            <input type="text" className="bg-white w-full rounded-md   p-3 py-4 text-sm outline-none" name="name" id="name" placeholder="Name" required />
+                            <input type="text" className="bg-white w-full rounded-md   p-3 py-4 text-sm outline-none" name="name" id="name" placeholder="Service Name" required defaultValue={title} readOnly />
                         </div>
                         <div className="w-full">
                             <input type="date" className="bg-white w-full rounded-md   p-3 py-4 text-sm outline-none" name="date" id="date" placeholder="Date" required />
@@ -67,7 +75,15 @@ const Checkout = () => {
                     <button className="btn border-none capitalize rounded-md text-white mt-5   w-full hover:bg-[#FF3811]  bg-[#FF3811]">Order Confirm</button>
                 </form>
             </div>
-
+            <Toaster
+                toastOptions={{
+                    position: "bottom-center",
+                    style: {
+                        background: "#283046",
+                        color: 'white'
+                    }
+                }}
+            />
 
         </div>
     )

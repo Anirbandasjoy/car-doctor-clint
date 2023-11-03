@@ -1,10 +1,15 @@
-import { Outlet } from "react-router-dom"
-
-
+import { Outlet, useNavigation } from "react-router-dom"
+import LoadingSpinner from "../components/loading/LoadingSpinner"
 const MainLayout = () => {
+    const navigation = useNavigation()
     return (
         <div>
-            <Outlet />
+
+
+            {
+                navigation.state === "loading" ? <LoadingSpinner /> :
+                    <Outlet />
+            }
         </div>
     )
 }

@@ -6,7 +6,7 @@ const Service = ({ service }) => {
     const { img, title, price, _id } = service
 
     return (
-        <div className='cursor-pointer h-80 w-full relative cardBody'>
+        <div className='cursor-pointer  h-80 w-full relative cardBody'>
 
             <img className='h-full w-full' src={img} alt={title} />
 

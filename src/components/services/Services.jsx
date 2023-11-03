@@ -30,8 +30,8 @@ const Services = () => {
         return <h1>{error}</h1>
     }
     return (
-        <div className="my-20" id="services">
-            <div className="text-center space-y-5">
+        <div className="mt-20 pb-20" id="services">
+            <div className="text-center space-y-5 dark:text-white">
                 <h4 className="font-bold text-red-400">Services</h4>
                 <h1 className="text-4xl font-bold">Our Service Area</h1>
                 <p className="text-xs lg:text-lg text-gray-500">the majority have suffered alteration in some form, by injected humour, or randomised <br /> words which don not look even slightly believable. </p>

@@ -1,11 +1,16 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import logo from '../../assets/logo.svg'
 import { useContext } from "react"
-import { AiOutlineShoppingCart } from "react-icons/ai"
+import { FiSun } from "react-icons/fi"
+import { LuMoonStar } from "react-icons/lu"
 import { AuthContext } from "../../context/AuthProvider"
+import useTheme from "../../hooks/useTheme"
+import { BsBook } from "react-icons/bs"
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const { mode, handleModeChnage } = useTheme()
+
     const navigate = useNavigate()
     const handleLogOut = () => {
         logOut()
@@ -19,15 +24,16 @@ const Navbar = () => {
             })
     }
     const navitems = <>
-        <li><Link to="/">Home</Link></li>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/dashboard">Dashboard</NavLink></li>
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
-        <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
+        <li><NavLink to="/blog">Blog</NavLink></li>
+        <li><NavLink to="/contact">Contact</NavLink></li>
     </>
     return (
-        <div className="">
-            <div className="navbar bg-base-100">
+        <div className="" id="navbar">
+            <div className="navbar bg-base-100 dark:bg-gray-800 dark:text-white">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -47,8 +53,13 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
+                    {
+                        mode === "light" ? <LuMoonStar onClick={handleModeChnage} size={33} className="mr-8 cursor-pointer" /> :
+                            <FiSun onClick={handleModeChnage} size={33} className="mr-8 cursor-pointer" />
+                    }
+
                     <Link to="/cart">
-                        <AiOutlineShoppingCart size={35} className="mr-8 cursor-pointer" />
+                        <BsBook size={32} className="mr-8 cursor-pointer" />
                     </Link>
                     {
                         user ? <Link onClick={handleLogOut} className="btn  btn-outline btn-warning rounded-sm capitalize ">Logout</Link> : <Link to="/login" className="btn  btn-outline btn-warning rounded-sm capitalize ">Login</Link>

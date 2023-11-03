@@ -2,7 +2,7 @@ import person from '../../assets/images/about_us/person.jpg'
 import parts from '../../assets/images/about_us/parts.jpg'
 const About = () => {
     return (
-        <div className='my-20 py-4' id='about'>
+        <div className='my-20 py-4 dark:text-white' id='about'>
             <div className='flex flex-col lg:flex-row justify-center gap-12'>
                 <div className='flex-1 relative'>
                     <img className='lg:w-5/6' src={person} alt="person" />

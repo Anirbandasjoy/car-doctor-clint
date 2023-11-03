@@ -26,8 +26,6 @@ const Login = () => {
                     })
                     .catch(err => console.log(err))
 
-
-
                 navigate(location ? location : "/")
 
             })
@@ -37,7 +35,7 @@ const Login = () => {
     return (
         <div className="container mx-auto px-2 lg:px-0 ">
             <Navbar />
-            <div className="flex flex-col lg:my-20 lg:flex-row items-center">
+            <div className="flex flex-col h-screen  lg:flex-row items-center">
                 <div className="flex-1">
                     <img className="w-full h-[40rem]" src={logo} alt="logo" />
                 </div>
@@ -55,7 +53,7 @@ const Login = () => {
                         <div className="flex items-start">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
-                                    <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                                    <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
                                 </div>
                                 <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                             </div>

@@ -27,3 +27,11 @@ body {
 .serviceDetails {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+#navbar a.active {
+  background: rgb(206, 96, 96) !important;
+  color: white;
+}
+#ordernav a.active {
+  background: rgb(207, 190, 190);
+}
